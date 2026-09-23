@@ -18,10 +18,10 @@
   運轉邏輯：
   1. 按 Input A 啟動
   2. 一般啟動時先往右
-  3. 撞右限位 -> 全部 OFF -> 休息 30 分鐘
-  4. 30 分鐘後 -> 往左
-  5. 撞左限位 -> 全部 OFF -> 休息 30 分鐘
-  6. 30 分鐘後 -> 往右
+  3. 撞右限位 -> 全部 OFF -> 休息 10 分鐘
+  4. 10 分鐘後 -> 往左
+  5. 撞左限位 -> 全部 OFF -> 休息 10 分鐘
+  6. 10 分鐘後 -> 往右
   7. 持續循環
   8. 再按 Input A -> 正常停止
   9. Input D -> 緊急停止 / 鎖定
@@ -36,7 +36,7 @@
      超時即停止全部輸出並進入 FAULT 狀態。
 
   注意：
-  - millis() 用於 30 分鐘等待，不阻塞主程式。
+  - millis() 用於 10 分鐘等待，不阻塞主程式。
   - 本程式假設 Relay ON = HIGH / OFF = LOW。
   - 緊急停止建議另外以硬體安全回路直接切斷馬達接觸器/驅動器。
 */
@@ -62,8 +62,8 @@ const byte RELAY_OFF = LOW;
 // 參數
 // ================================
 
-// 到達端點後休息 30 分鐘
-const unsigned long REST_TIME = 30UL * 60UL * 1000UL;
+// 到達端點後休息 10 分鐘
+const unsigned long REST_TIME = 10UL * 60UL * 1000UL;
 
 // 左右單向最大允許運轉時間
 // 預設 5 分鐘，可依實際滑軌距離調整
@@ -291,7 +291,7 @@ void loop()
       break;
 
     // ================================================
-    // 右側休息 30 分鐘
+    // 右側休息 10 分鐘
     // ================================================
     case STATE_REST_RIGHT:
 
@@ -338,7 +338,7 @@ void loop()
       break;
 
     // ================================================
-    // 左側休息 30 分鐘
+    // 左側休息 10 分鐘
     // ================================================
     case STATE_REST_LEFT:
 
@@ -484,7 +484,7 @@ void startRightRest()
   restStartTime = millis();
   currentState = STATE_REST_RIGHT;
 
-  Serial.println("RIGHT REST = 30 MINUTES");
+  Serial.println("RIGHT REST = 10 MINUTES");
 }
 
 // ================================================================
@@ -498,7 +498,7 @@ void startLeftRest()
   restStartTime = millis();
   currentState = STATE_REST_LEFT;
 
-  Serial.println("LEFT REST = 30 MINUTES");
+  Serial.println("LEFT REST = 10 MINUTES");
 }
 
 // ================================================================
